@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  #login-bg {
+    background-image: url("{{ url_for('static', filename='images/' + selected_image) }}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top left;
+    height: 100vh;
+    margin-top: -50px
+  }
+</style>
+<div id="login-bg">
+  <div class=" mt-5">
+    <div class="row">
+      <div class="col text-end mx-5 mt-5">
+        <a href="">
+          <button class="btn btnLogin fs-4" id="btnLogin">Connexion</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="row justify-content-center no_padding">
+        <div class="col-md-3 mt-3 no_padding border border-end-0 border-secondary rounded-start shadow">
+            <img src="{{ url_for('static', filename='images/login_image1.png') }}" alt="Image" class="img-fluid" />
+        </div>
+        <div
+            class="col-md-3 mt-3 border rounded-end shadow border-start-0 border-secondary d-flex flex-column justify-content-center align-items-center">
+            <div class="texte_bleu bold fw-bold fs-3 mb-2">
+                <p>Bienvenue</p>
+                <p class="fs-5">Vous n'êtes pas habilité à cette page, veuillez contacter un administrateur.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
