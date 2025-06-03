@@ -17,10 +17,10 @@
 
             <ul class="navbar-nav fs-5">
                 {% if session.get('user') %} {# Si utilisateur authentifié #}
-                <li class="nav-item">
+                <li class="nav-item {% if request.path == url_for('planning.index')%} active{% endif %}">
                     <a class="nav-link" href="{{ url_for('planning.index') }}">Planning</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if request.path == url_for('gestion.index')%} active{% endif %} ">
                     <a class="nav-link" href="{{ url_for('gestion.index') }}">Gestion</a>
                 </li>
                 <li class="nav-item dropdown">
