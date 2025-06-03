@@ -16,10 +16,14 @@ def create_app():
     from .api.routes import api_bp
     from .auth.routes import auth_bp
     from .main.routes import main_bp
+    from .gestion.routes import gestion_bp
+    from .planning.routes import planning_bp
 
     app.register_blueprint(api_bp, url_prefix='/astreinte')
     app.register_blueprint(auth_bp, url_prefix='/astreinte/auth')
     app.register_blueprint(main_bp, url_prefix='/astreinte')
+    app.register_blueprint(gestion_bp, url_prefix='/astreinte/gestion')
+    app.register_blueprint(planning_bp, url_prefix='/astreinte/planning')
 
     app.jinja_env.globals['has_droit'] = has_droit
 

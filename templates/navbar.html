@@ -1,7 +1,7 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light">
 
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">
             <img class="mx-3" src="{{ url_for('static', filename='images/edf_logo_transparent.png') }}" alt="EDF Logo"
                 style="max-height: 50px;" />
         </a>
@@ -16,7 +16,13 @@
 
 
             <ul class="navbar-nav fs-5">
-                {% if session.get('user') %}  {# Si utilisateur authentifié #}
+                {% if session.get('user') %} {# Si utilisateur authentifié #}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('planning.index') }}">Planning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('gestion.index') }}">Gestion</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link " href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -44,6 +50,7 @@
             </ul>
             {% else %}
             <a href="http://141.94.27.12/zentac/sso/?app=55_astreinte">
+            {# <a href="{{ url_for('auth.login_dev') }}"> #}
                 <button class="btn btnLogin fs-6 mx-3" id="btnLogin">Connexion</button>
             </a>
 

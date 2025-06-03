@@ -26,6 +26,10 @@ pipeline {
             }
         }
 
+        // stage('Tests') {
+
+        // }
+
 
         stage('Déploiement en production') {
             steps {
