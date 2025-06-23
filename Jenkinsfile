@@ -30,9 +30,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        export SSO_VALIDATE_URL=http://fake-sso.test
-                        export SSO_USER_INFO_URL=http://fake-sso.test/userinfo
-                        export SSO_LOGOUT_URL=http://fake-sso.test/logout
+                        cp /var/www/astreinte/.env ${env.WORKSPACE}/.env
                         bash -c "source .venv/bin/activate && python -m pytest tests/ -v --tb=short"
                     """
                 }
