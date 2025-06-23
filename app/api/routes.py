@@ -71,3 +71,39 @@ def delete(table_name, item_id):
     db_service.delete_item(table_name, item_id)
     return jsonify({'status': 'ligne supprimé'}), 200
 
+
+@api_bp.route('/api/agents/', methods=['GET'])
+def get_agents():
+    #nettoie le dictionnaire en enlevant les param vides
+    filters = {key: value for key, value in request.args.items() if value}
+
+    nom_requete = 'get_all_agents'
+    items, description = db_service.execute_custom_query(nom_requete, filters)
+    items_list = [db_service.serialize_row(row, description) for row in items]
+    return jsonify(items_list)
+
+# @api_bp.route('/api/<string:query_name>/<int:item_id>/', methods=['GET'])
+# def get_item_by_query(query_name, item_id):
+#     try:
+#         item, description = db_service.fetch_by_id_join(query_name, (item_id,))
+#         if item:
+#             item_dict = db_service.serialize_row(item, description)
+#             return jsonify(item_dict)
+#         return jsonify({'erreur': 'Objet introuvable'}), 404
+#     except ValueError as e:
+#         return jsonify({'erreur': str(e)}), 500
+
+@api_bp.route('/api/query/<string:query_name>/', methods=['GET'])
+def execute_custom_query(query_name):
+    filters = {key: value for key, value in request.args.items()}
+    
+    # execute la requête dynamique
+    try:
+        items, description = db_service.execute_custom_query(query_name, filters)
+        items_list = [db_service.serialize_row(row, description) for row in items]
+        return jsonify(items_list), 200
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 404
+    except Exception as e:
+        print(f"Erreur lors de l'exécution de la requête: {e}")
+        abort(500, description="Erreur d'exécution de la requête")
