@@ -34,7 +34,7 @@ pipeline {
                         export SSO_USER_INFO_URL=http://fake-sso.test/userinfo
                         export SSO_LOGOUT_URL=http://fake-sso.test/logout
                         source .venv/bin/activate
-                        python3 -m pytest tests/ -v --tb=short
+                        bash -c "source .venv/bin/activate && python -m pytest tests/ -v --tb=short"
                     """
                 }
             }
