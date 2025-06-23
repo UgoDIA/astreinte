@@ -29,7 +29,7 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    sh "bash -c 'source .venv/bin/activate && python -m pytest tests/ -v --tb=short'"
+                    sh "bash -c 'export SSO_VALIDATE_URL=http://fake-sso.test && source .venv/bin/activate && python -m pytest tests/ -v --tb=short'"
                 }
             }
         }
