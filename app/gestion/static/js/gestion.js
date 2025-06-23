@@ -99,21 +99,44 @@ function populateEquipe(domain) {
         ]
     });
 }
-
+function formatTel(number) {
+    number = number.replace(/\D/g, '');
+    return number.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+}
 
 function populateAgent(domain) {
     const key = "agent"
     $('#agentTable').DataTable({
 
         ajax: {
-            url: domain + '/astreinte/api/agent/?statut_agent=true',
+            url: domain + '/astreinte/api/query/agent/?a.statut_agent=true',
             dataSrc: ''
         },
         columns: [
             { data: 'nom_agent', title: 'Nom' },
             { data: 'prenom_agent', title: 'Prénom' },
-            { data: 'num_astreinte_agent', title: 'N° d\'astreinte' },
-            { data: 'num_pro_agent', title: 'N° professionnel' }
+            { data: 'nom_fonction', title: 'Fonction' },
+            { data: 'nom_equipe', title: 'Equipe' },
+            {
+                data: 'num_astreinte_agent',
+                title: 'N° d\'astreinte',
+                render: function (data, type) {
+                    if (type === 'display' && data) {
+                        return formatTel(data);
+                    }
+                    return data;
+                }
+            },
+            {
+                data: 'num_pro_agent',
+                title: 'N° professionnel',
+                render: function (data, type) {
+                    if (type === 'display' && data) {
+                        return formatTel(data);
+                    }
+                    return data;
+                }
+            }
         ],
 
         language: { url: '/static/librairie/datatables/fr_fr.json' },

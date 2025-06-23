@@ -48,5 +48,6 @@
     <script>
         const user_nni = '{{ session['user']['user']['nni'] }}'
     </script>
+    <script src="{{ url_for('static', filename='js/forms.js') }}"></script>
     <script src="{{ url_for('gestion.static', filename='js/gestion.js') }}"></script>
     {% endblock %}
