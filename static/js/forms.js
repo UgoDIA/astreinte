@@ -29,7 +29,7 @@ function populateAgentSelects() {
     const domain = window.location.origin;
 
     $.ajax({
-        url: `${domain}/astreinte/api/equipe/`,
+        url: `${domain}/astreinte/api/equipe/?statut_equipe=true`,
         method: 'GET',
         success: function (equipeData) {
             const equipeSelect = $('#equipe');
@@ -44,7 +44,7 @@ function populateAgentSelects() {
     });
 
     $.ajax({
-        url: `${domain}/astreinte/api/fonction/`,
+        url: `${domain}/astreinte/api/fonction/?statut_fonction=true`,
         method: 'GET',
         success: function (fonctionData) {
             const fonctionSelect = $('#fonction');
@@ -384,7 +384,7 @@ function populateAgentEditSelects(rowData) {
     const domain = window.location.origin;
 
     $.ajax({
-        url: `${domain}/astreinte/api/equipe/`,
+        url: `${domain}/astreinte/api/equipe/?statut_equipe=true`,
         method: 'GET',
         success: function (equipeData) {
             const equipeSelect = $('#equipe');
@@ -401,7 +401,7 @@ function populateAgentEditSelects(rowData) {
 
  
     $.ajax({
-        url: `${domain}/astreinte/api/fonction/`,
+        url: `${domain}/astreinte/api/fonction/?statut_fonction=true`,
         method: 'GET',
         success: function (fonctionData) {
             const fonctionSelect = $('#fonction');

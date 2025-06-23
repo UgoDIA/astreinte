@@ -2,15 +2,37 @@
 
 {% block content %}
 
-
-
 <div class="container mt-4 text-center">
+    <h1 class="display-6">Planning d'astreinte</h1>
 
+    <!-- Alert Placeholder -->
+    <div class="alertPlaceholder"></div>
 
-
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
         <div class="col-md-8">
-            <table class="table table-bordered  text-center align-middle ">
+            <div class="row justify-content-between align-items-end mb-3">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dateSelect" class="form-label">Sélectionner une date</label>
+                        <input type="date" class="form-control" id="dateSelect" name="date">
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex gap-3 justify-content-end">
+                    <img id="exportPdfBtn" class="clickable-image"
+                        src="{{ url_for('static', filename='images/download.png') }}" alt="Export pdf"
+                        style="max-height: 50px; cursor: pointer; opacity: 0.5;" />
+                    <img id="mailBtn" class="clickable-image" src="{{ url_for('static', filename='images/email.png') }}"
+                        alt="Email" style="max-height: 50px; cursor: pointer; opacity: 0.5;" />
+                </div>
+            </div>
+
+            <!-- Week Number Display -->
+            <div class="alert alert-info" id="weekInfo" style="display: none; margin-bottom: 20px;">
+                <strong>Semaine <span id="weekNumber"></span></strong>
+                <span id="weekDateRange"></span>
+            </div>
+
+            <table class="table table-bordered text-center align-middle" id="planningTable">
                 <thead class="custom-thead">
                     <tr>
                         <th>Nom</th>
@@ -18,112 +40,31 @@
                         <th>N° Pro</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="3" class="section-header">
-                            Permanence de direction <br>
-                            du 18/06/25 à 12:00 au 25/06/25 à 12:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agent 1</td>
-                        <td>06 92 45 78 12</td>
-                        <td>06 93 12 56 87</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 2</td>
-                        <td>06 92 65 18 12</td>
-                        <td>06 92 11 56 97</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="section-header">
-                            CADRE D’ASTREINTE RÉSEAU (CARES) <br>
-                            du 18/06/2025 à 12:00 au 25/06/2025 à 12:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agent 3</td>
-                        <td>06 93 15 28 92</td>
-                        <td>06 93 22 66 97</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="section-header">
-                            CADRE D’ASTREINTE SYSTÈME (CASYS) <br>
-                            du 18/06/2025 à 12:00 au 25/06/2025 à 12:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agent 4</td>
-                        <td>06 92 78 45 33</td>
-                        <td>06 93 99 11 44</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 5</td>
-                        <td>06 93 14 67 20</td>
-                        <td>06 92 66 89 01</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 6</td>
-                        <td>06 92 31 72 10</td>
-                        <td>06 93 55 61 27</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="section-header">
-                            INFRASTRUCTURES SI & TÉLÉCOM <br>
-                            du 18/06/2025 à 12:00 au 25/06/2025 à 12:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agent 7</td>
-                        <td>06 93 28 99 74</td>
-                        <td>06 92 47 65 22</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 8</td>
-                        <td>06 92 64 78 55</td>
-                        <td>06 93 23 84 10</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="section-header">
-                            SERVICE PRODUCTION <br>
-                            du 19/06/2025 à 12:30 au 26/06/2025 à 12:30
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agent 9</td>
-                        <td>06 92 17 28 64</td>
-                        <td>06 93 38 99 52</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 10</td>
-                        <td>06 93 81 25 47</td>
-                        <td>06 92 54 61 90</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 11</td>
-                        <td>06 93 14 75 63</td>
-                        <td>06 92 33 86 10</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 12</td>
-                        <td>06 92 12 47 89</td>
-                        <td>06 93 41 27 85</td>
-                    </tr>
-                    <tr>
-                        <td>Agent 13</td>
-                        <td>06 93 66 39 21</td>
-                        <td>06 92 22 94 70</td>
-                    </tr>
+                <tbody id="planningTableBody">
+                    <!-- Table content will be populated by JavaScript -->
                 </tbody>
             </table>
-
         </div>
     </div>
-
-
 </div>
 
+<!-- Include html2pdf library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+<style>
+    .clickable-image {
+        transition: all 0.3s ease;
+    }
+
+    .clickable-image:hover {
+        transform: scale(1.1);
+        opacity: 1 !important;
+    }
+
+    .clickable-image:active {
+        transform: scale(0.95);
+    }
+</style>
 
 {% endblock %}
 {% block script %}

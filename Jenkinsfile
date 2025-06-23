@@ -26,10 +26,13 @@ pipeline {
             }
         }
 
-        // stage('Tests') {
-
-        // }
-
+        stage('Tests') {
+            steps {
+                script {
+                    sh "bash -c 'source .venv/bin/activate && python -m pytest tests/ -v --tb=short'"
+                }
+            }
+        }
 
         stage('Déploiement en production') {
             steps {

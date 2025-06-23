@@ -95,7 +95,7 @@ def get_agents():
 
 @api_bp.route('/api/query/<string:query_name>/', methods=['GET'])
 def execute_custom_query(query_name):
-    filters = {key: value for key, value in request.args.items()}
+    filters = request.args.to_dict(flat=False)
     
     # execute la requête dynamique
     try:

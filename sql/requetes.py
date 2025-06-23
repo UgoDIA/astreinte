@@ -18,16 +18,21 @@ queries = {
 
 """,
 
-    'get_planning': """
+    'planning': """
         SELECT 
-            p.semaine,
+            pa.id_planning_agent,
+            pa.semaine,
+            pa.annee,
             a.id_agent,
-            a.nom AS nom_agent,
-            a.prenom AS prenom_agent,
+            a.nom_agent,
+            a.prenom_agent,
             e.nom_equipe,
-            f.nom_fonction
-        FROM planning p
-        JOIN planning_agent pa ON p.id_planning = pa.id_planning
+            f.nom_fonction,
+            eaf.id_equipe_agent_fonction,
+            e.id_equipe,
+            a.num_astreinte_agent,
+            a.num_pro_agent
+        FROM planning_agent pa
         JOIN equipe_agent_fonction eaf ON pa.id_equipe_agent_fonction = eaf.id_equipe_agent_fonction
         JOIN agent a ON eaf.id_agent = a.id_agent
         JOIN equipe e ON eaf.id_equipe = e.id_equipe

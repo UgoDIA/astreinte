@@ -218,15 +218,29 @@ class DatabaseService:
         where_clauses = []
         params = []
 
+        allowed_operators = ['>=', '<=', '!=', '=', '>', '<']
+
         # si filtres, les ajoute à la requête
         if filters:
-            for key, value in filters.items():
+            for key, values in filters.items():
                 # sépare le nom de la table et le nom de la colonne
                 table_column = key.split('.')
                 if len(table_column) == 2:
                     table, column = table_column
-                    where_clauses.append(f"{table}.{column} = %s")
-                    params.append(value)
+                    if not isinstance(values, list):
+                        values = [values]
+
+                    for value in values:
+                        operator = '='  # opérateur par défaut
+                        for op in allowed_operators:
+                            if str(value).startswith(op):
+                                operator = op
+                                value = value[len(op):]  
+                                break
+
+                        # ajoute la clause WHERE dynamique
+                        where_clauses.append(f"{table}.{column} {operator} %s")
+                        params.append(value)
 
         # ajoute les filtres à la requête
         if where_clauses:

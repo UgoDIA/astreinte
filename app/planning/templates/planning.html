@@ -2,27 +2,149 @@
 
 {% block content %}
 
+<style>
+    .planning-cell {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        vertical-align: middle;
+        min-height: 60px;
+    }
 
+    .planning-cell:hover {
+        background-color: #f8f9fa;
+        transform: scale(1.02);
+    }
+
+    .planning-cell.unassigned {
+        background-color: #ffffff;
+        border: 2px dashed #dee2e6;
+    }
+
+    .planning-cell.unassigned:hover {
+        background-color: #e9ecef;
+        border-color: #6c757d;
+    }
+
+    .planning-cell.assigned {
+        background-color: #d4edda;
+        border: 2px solid #28a745;
+        color: #155724;
+    }
+
+    .planning-cell.assigned:hover {
+        background-color: #c3e6cb;
+    }
+
+    .planning-cell.pending-assign {
+        background-color: #fff3cd;
+        border: 2px solid #ffc107;
+        color: #856404;
+    }
+
+    .planning-cell.pending-unassign {
+        background-color: #f8d7da;
+        border: 2px solid #dc3545;
+        color: #721c24;
+    }
+
+    #planningTable th {
+        text-align: center;
+        vertical-align: middle;
+        background-color: #343a40;
+        color: white;
+        font-weight: bold;
+    }
+
+    #planningTable td:first-child {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .save-button-container {
+        margin-top: 20px;
+       
+    }
+</style>
 
 <div class="container mt-4 text-center">
-    <h1 class="display-6">planning</h1>
+    <h1 class="display-6">Planification</h1>
+    {% include 'alert.html' %}
 
-    {# <form>
-        <div class="form-group row justify-content-center">
-            <label for="siteSelect" class="col-form-label"></label>
-            <div class="col-2">
-                <select class="form-select" id="siteSelect" name="site">
-                    <option value="ster">Toutes</option>
-                    <option value="albioma">Agent 2</option>
-                    <option value="pei_tac">Agent 3</option>
-                </select>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="equipeSelect" class="form-label">Sélectionner une équipe</label>
+                        <select class="form-select" id="equipeSelect" name="equipe">
+                            <option value="" disabled selected>Chargement des équipes...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dateSelect" class="form-label">Sélectionner une date</label>
+                        <input type="date" class="form-control" id="dateSelect" name="date">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="save-button-container">
+                <button id="saveButton" class="btn btnLogin btn-lg" disabled>
+                    <i class="fas fa-save"></i> Enregistrer les modifications
+                </button>
             </div>
         </div>
-    </form> #}
+    </div>
+
+    <!-- Planning Table -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="planningTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="min-width: 200px;">Agent</th>
+                            <th id="week1Header" style="min-width: 120px;">Semaine</th>
+                            <th id="week2Header" style="min-width: 120px;">Semaine +1</th>
+                            <th id="week3Header" style="min-width: 120px;">Semaine +2</th>
+                            <th id="week4Header" style="min-width: 120px;">Semaine +3</th>
+                            <th id="week5Header" style="min-width: 120px;">Semaine +4</th>
+                        </tr>
+                    </thead>
+                    <tbody id="planningTableBody">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="confirmationModalBody">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btnLogin" id="confirmButton">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('main.static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('planning.static', filename='js/planning.js') }}"></script>
 {% endblock %}
