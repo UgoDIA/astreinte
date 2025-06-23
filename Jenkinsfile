@@ -33,7 +33,7 @@ pipeline {
                         export SSO_VALIDATE_URL=http://fake-sso.test
                         export SSO_USER_INFO_URL=http://fake-sso.test/userinfo
                         export SSO_LOGOUT_URL=http://fake-sso.test/logout
-                        python -m pytest tests/ -v --tb=short
+                        python3 -m pytest tests/ -v --tb=short
                     """
                 }
             }
