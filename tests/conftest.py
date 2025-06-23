@@ -1,7 +1,8 @@
 import pytest
 from app import create_app
 import os
-
+from dotenv import load_dotenv
+load_dotenv() 
 @pytest.fixture
 def app():
     """Create and configure a new app instance for each test."""
