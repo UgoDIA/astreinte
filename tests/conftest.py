@@ -2,26 +2,30 @@ import pytest
 from app import create_app
 import os
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()
+
+
 @pytest.fixture
 def app():
-    """Create and configure a new app instance for each test."""
-    # Set test environment variables
+    """Crée et configure une nouvelle instance d'application pour chaque test."""
+    # Définir les variables d'environnement de test
     os.environ['SECRET_KEY'] = 'test-secret-key'
-    
-    # Create the app with test configuration
+
+    # Créer l'application avec la configuration de test
     app = create_app()
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
-    
+
     return app
+
 
 @pytest.fixture
 def client(app):
-    """A test client for the app."""
+    """Un client de test pour l'application."""
     return app.test_client()
+
 
 @pytest.fixture
 def runner(app):
-    """A test runner for the app's Click commands."""
-    return app.test_cli_runner() 
+    """Un runner de test pour les commandes Click de l'application."""
+    return app.test_cli_runner()
