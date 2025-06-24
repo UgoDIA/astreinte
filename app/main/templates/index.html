@@ -17,6 +17,7 @@
                         <input type="date" class="form-control" id="dateSelect" name="date">
                     </div>
                 </div>
+                {% if session.get('user') %}
                 <div class="col-md-3 d-flex gap-3 justify-content-end">
                     <img id="exportPdfBtn" class="clickable-image"
                         src="{{ url_for('static', filename='images/download.png') }}" alt="Export pdf"
@@ -24,10 +25,11 @@
                     <img id="mailBtn" class="clickable-image" src="{{ url_for('static', filename='images/email.png') }}"
                         alt="Email" style="max-height: 50px; cursor: pointer; opacity: 0.5;" />
                 </div>
+                {% endif %}
             </div>
 
             <!-- Week Number Display -->
-            <div class="alert alert-info" id="weekInfo" style="display: none; margin-bottom: 20px;">
+            <div class="alert alert-secondary" id="weekInfo" style="display: none; margin-bottom: 20px;">
                 <strong>Semaine <span id="weekNumber"></span></strong>
                 <span id="weekDateRange"></span>
             </div>

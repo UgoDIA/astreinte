@@ -386,7 +386,7 @@ Cordialement,
     window.open(mailtoLink, '_blank');
 
     // Show instructions for PDF attachment
-    showEmailInstructions(weekNumber, year);
+    // showEmailInstructions(weekNumber, year);
 }
 
 /**
@@ -394,14 +394,13 @@ Cordialement,
  */
 function showEmailInstructions(weekNumber, year) {
     const instructions = `
-        <div class="alert alert-info">
+        <div class="alert alert-secondary">
             <h5><i class="fas fa-info-circle"></i> Instructions pour l'attachement PDF</h5>
             <ol>
                 <li>Cliquez sur le bouton "Exporter PDF" ci-dessus</li>
                 <li>Le fichier sera téléchargé avec le nom: <strong>planning_astreinte_semaine_${weekNumber}_${year}.pdf</strong></li>
                 <li>Dans votre client mail, attachez ce fichier PDF</li>
             </ol>
-            <p class="mb-0"><strong>Note:</strong> Pour une intégration complète, vous pourriez envisager d'utiliser un serveur SMTP côté serveur.</p>
         </div>
     `;
 
